@@ -11,31 +11,59 @@
   
   <input type="text" class="form-control"  placeholder="awal nama lalu spasi untuk mencari member" name="nampel" id="nampel" required />
  
-  <div id="hasilpelanggan"></div>
-</div>
+  <div id="hasilpelanggan"></div></div>
+
+
+
 <br>
+<div class="input-group">
+  <button id="tambahkelist" class="btn btn-primary" />Tambahkan</button>
+  
+</div>
+
+
 <div class="form-group">
-  <label for="sel1">Pilih Produk :</label>
-  <select class="form-control" id="nampro" name="nampro">
-  <option value="0">Pilih Produk</option>
-   
-    
-  </select>
-</div>
-<br>
-<div class="input-group">
-  <span class="input-group-addon">Jumlah Produk </span>
-  <input type="text" class="form-control" required id="jumpro" name="jumpro" placeholder="angka" />
-</div>
-<br>
-<div class="input-group">
- <label for="sel1">Jumlah Bayar :</label>
- 
-   <h1 id="bayar" > </h1>
- 
+
+<div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                         <th>Kategori Produk</th>
+                                        <th>Nama Produk</th>
+                                        <th>Jumlah Produk</th>
+                                        <th>Jumlah Bayar</th>
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="success">
+                                     <td><select class="form-control" id="katpro" name="katpro">
+                                     <option value="0">Pilih Kategori</option>
+         <td><select class="form-control" id="nampro" name="nampro">
+         <option value="0">Pilih Produk</option>
+      
+  </select></td>
+  <td><input type="text" class="form-control" required id="jumpro" name="jumpro" placeholder="angka" /></td>
+                                        <td>  <h4 id="bayar" > </h4></td>
+                                       
+                                    </tr>
+
+                                    <tr class="info">
+                                        <td ><center><b> Total Bayar </b></center></td>
+                                        
+                                        <td colspan=3>
+
+
+    <h3 id="bayar" > </h3>
+
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
 
 </div>
-<br>
 
 <div class="input-group">
   <span class="input-group-addon">Tanggal </span>

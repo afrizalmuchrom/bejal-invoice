@@ -7,7 +7,17 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if($_GET["x"] == 'tampil'){
 
-$result = $conn->query("SELECT * FROM produk");
+$result = $conn->query("SELECT * FROM produk ");
+$outp = array();
+$outp = $result->fetch_all(MYSQLI_ASSOC);
+$conn->close();	
+
+echo json_encode($outp);
+
+
+}else if($_GET["x"] == 'tampil_kategori_pada_produk'){
+$param_kategori = $_GET["param_kategori"];
+$result = $conn->query("SELECT * FROM produk WHERE kategoriproduk='$param_kategori'");
 $outp = array();
 $outp = $result->fetch_all(MYSQLI_ASSOC);
 $conn->close();	
@@ -16,6 +26,7 @@ echo json_encode($outp);
 
 
 }else if($_GET["x"] == 'hapusproduk'){
+
 $id = $_GET["id"];
 
 $sql = "DELETE FROM produk WHERE idproduk=$id";
@@ -41,14 +52,15 @@ $sql = "UPDATE produk SET namaproduk='$nampro',hargaproduk='$harpro',deskripsi='
 
 if ($conn->query($sql) === TRUE) {
     echo "<div class='alert alert-success'>  <strong>Berhasil Update Produk. :) </div>";
-} else {
+}else {
     echo "<div class='alert alert-danger'>  <strong>Gagal Update Produk. :(</div>";
-    //. $conn->error;
+   
 }
 
 $conn->close();
 
-}else if($_GET["x"] == 'tampil_pilihan'){
+
+} else if($_GET["x"] == 'tampil_pilihan'){
 
 $result = $conn->query("SELECT * FROM produk");
 
@@ -65,9 +77,19 @@ $conn->close();
 
 
 
+}else if($_GET["x"] == 'tampil_kategori'){
+
+$result = $conn->query("SELECT * FROM kategoriproduk");
+$outp = array();
+$outp = $result->fetch_all(MYSQLI_ASSOC);
+$conn->close();	
+
+echo json_encode($outp);
+
+
 }else{
 	
-echo "Error : ";
+echo "Error ";
 }
 
 /*

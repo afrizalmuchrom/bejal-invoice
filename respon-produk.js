@@ -124,8 +124,8 @@ req.onreadystatechange = function(){
 
 //console.log(JSON.parse(req.responseText));
 dasbor.innerHTML = "<table  id='example' class='display' cellspacing='0' width='100%'><thead>"+
-            "<tr><th>Nama Produk</th><th>Deskripsi</th><th>Stok</th><th>Harga</th><th>Pilihan</th></tr></thead>"+
-        "<tfoot><tr><th>Nama Produk</th><th>Deskripsi</th><th>Stok</th><th>Harga</th><th>Pilihan</th></tr></tfoot></table>";
+            "<tr><th>Kategori</th><th>Nama Produk</th><th>Deskripsi</th><th>Stok</th><th>Harga</th><th>Pilihan</th></tr></thead>"+
+        "<tfoot><tr><th>Kategori</th><th>Nama Produk</th><th>Deskripsi</th><th>Stok</th><th>Harga</th><th>Pilihan</th></tr></tfoot></table>";
 
 
       
@@ -136,6 +136,7 @@ dasbor.innerHTML = "<table  id='example' class='display' cellspacing='0' width='
         "data" : obj,
       
         "columns" : [
+             { "data" : "kategoriproduk" },
             { "data" : "namaproduk" },
             { "data" : "deskripsi" },
             { "data" : "stokproduk" },
@@ -166,17 +167,19 @@ return '<a href="#edit-modal" ><button class="btn btn-warning"  data-toggle="mod
 
 function forminvoice(event){
   
-  var link = 'forminvoice.html';
-  var req = new XMLHttpRequest();
+var link = 'forminvoice.html';
+var req = new XMLHttpRequest();
 
 req.open("GET",link,true);
 req.send();
 req.onreadystatechange = function(){
-  
+ 
   if(req.readyState == 4 && req.status == 200){
     dasbor.innerHTML = req.responseText;
-   
-var param = 'tampil';
+
+
+
+var param = 'tampil_kategori';
 link = 'ambilproduk.php';
 
 req.open("GET",path+link+"?x="+param,true);
@@ -185,96 +188,27 @@ req.send();
 req.onreadystatechange = function(){
   if(req.readyState == 4 && req.status == 200){
     obj = JSON.parse(req.responseText);
-	var pilih = document.getElementById("nampro");
-  // PANGGIL FUNGSI TAMPIL PELANGGAN
+  var pilih_kategori = document.getElementById("katpro");
+  
 
 
- $(pilih).empty();
-	
-	for (var i = 0; i < obj.length; i++) {
-	$(pilih).append( '<option id=' + obj[i].idproduk + ' value=' + obj[i].hargaproduk + '>' + obj[i].namaproduk + ' - '+obj[i].deskripsi +' - '+ obj[i].hargaproduk +'</option>');
+ $(pilih_kategori).empty();
+  
+  for (var i = 0; i < obj.length; i++) {
+  $(pilih_kategori).append( '<option id="option_katpro" value=' + obj[i].idkategoriproduk + '>' + obj[i].namakategoriproduk +'</option>');
 
     }
-	
-
-  
-  
-  
-}
-
-var addnampel = document.getElementById('nampel');             
-addnampel.addEventListener("keydown",function(event){
  
-link = 'ambilinvoice.php';
-param = 'tampil_pelanggan'  
-
-keys = event.which;
-var req = new XMLHttpRequest();
-
-if(keys == 32){
- 
-valnampel = addnampel.value;
-req.open("GET",path+link+"?x="+param+"&&q="+valnampel,true);
-req.send();
-
-}else if( keys == 8){
- $('#hasilpelanggan').empty();
-}else{}
 
 
-req.onreadystatechange = function(){
-  if(req.readyState == 4 && req.status == 200){
-   obj = JSON.parse(req.responseText);
- 
-  $('#hasilpelanggan').empty();
-  for (var i = 0; i < obj.length; i++) {
-	
-$('#hasilpelanggan').append( '<a href=#  onClick="fillnama(\''+ obj[i].namapelanggan +' - '+ obj[i].nohppelanggan  +'\')">'+ obj[i].namapelanggan +' - '+ obj[i].nohppelanggan +'</a><br>');
-   
-
-
-	}
-
-  
-
-    
-
-
-
-
+pilih_kategori.addEventListener("click",tampilprodukselek);
 }
-}
-
-
-
-
-
-});
 
 
 }
 
-function jum(event){
- 
-if ( /\D/.test(jumpro.value)){
-  alert('Inputkan dengan Angka');
- }else{
- var x=0;
-  x = nampro.value * jumpro.value;
 
-bayar.innerHTML = x.toLocaleString();
 }
-}
-
-
-var jumpro = document.getElementById("jumpro");
-var bayar = document.getElementById("bayar");
-
-jumpro.addEventListener("keyup",jum);
-
-
-
-   }
 }
 }
 
@@ -317,10 +251,7 @@ invoice.addEventListener("click",forminvoice);
         	editstokpro.value = prod_array[3];
         	editdeskripsi.value = prod_array[4];
 
-                   // $modal.find('.edit-content').html(esseyId);
-//                }
-//            });
-            
+
         })
 
 
@@ -328,16 +259,104 @@ invoice.addEventListener("click",forminvoice);
 
 // TAMPIL PELANGGAN-----------------------------------
 
-
-
 function fillnama(x){
  var addnampel = document.getElementById('nampel'); 
 addnampel.value = x;
 
 $('#hasilpelanggan').empty();
-
-
-
   
+}
+
+// TAMPIL PRODUK OPTION SELECT DI INVOICE----------------------------------
+
+function tampilprodukselek(event){
+  
+var req = new XMLHttpRequest();
+var option_katpro = document.getElementById("option_katpro");
+
+
+
+link = 'ambilproduk.php';
+
+
+req.open("GET",path+link+"?x=tampil_kategori_pada_produk&&param_kategori="+event.target.value,true);
+req.send();
+
+req.onreadystatechange = function(){
+  if(req.readyState == 4 && req.status == 200){
+    obj = JSON.parse(req.responseText);
+    console.log(obj);
+  var pilih = document.getElementById("nampro");
+  // PANGGIL FUNGSI TAMPIL PELANGGAN
+
+
+ $(pilih).empty();
+  
+  for (var i = 0; i < obj.length; i++) {
+  $(pilih).append( '<option id=' + obj[i].idproduk + ' value=' + obj[i].hargaproduk + '>' + obj[i].namaproduk + ' - '+obj[i].deskripsi +' - '+ obj[i].hargaproduk +'</option>');
+
+    }
+ 
+}
+
+var addnampel = document.getElementById('nampel');             
+addnampel.addEventListener("keydown",function(event){
+ 
+link = 'ambilinvoice.php';
+param = 'tampil_pelanggan'  
+
+keys = event.which;
+var req = new XMLHttpRequest();
+
+if(keys == 32){
+ 
+valnampel = addnampel.value;
+req.open("GET",path+link+"?x="+param+"&&q="+valnampel,true);
+req.send();
+
+}else if( keys == 8){
+ $('#hasilpelanggan').empty();
+}else{}
+
+
+req.onreadystatechange = function(){
+  if(req.readyState == 4 && req.status == 200){
+   obj = JSON.parse(req.responseText);
+ 
+  $('#hasilpelanggan').empty();
+  for (var i = 0; i < obj.length; i++) {
+  
+$('#hasilpelanggan').append( '<a href=#  onClick="fillnama(\''+ obj[i].namapelanggan +' - '+ obj[i].nohppelanggan  +'\')">'+ obj[i].namapelanggan +' - '+ obj[i].nohppelanggan +'</a><br>');
+   
+
+
+  }
+}
+}});
+
+
+}
+
+function jum(event){
+ 
+if ( /\D/.test(jumpro.value)){
+  alert('Inputkan dengan Angka');
+ }else{
+ var x=0;
+  x = nampro.value * jumpro.value;
+
+bayar.innerHTML = x.toLocaleString();
+}
+}
+
+var jumpro = document.getElementById("jumpro");
+var bayar = document.getElementById("bayar");
+
+jumpro.addEventListener("keyup",jum);
+
+
+
+   
+
 }
 
