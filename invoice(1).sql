@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2018 at 09:53 PM
+-- Generation Time: Apr 09, 2018 at 04:49 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -39,7 +39,9 @@ CREATE TABLE `kategoriproduk` (
 
 INSERT INTO `kategoriproduk` (`idkategoriproduk`, `namakategoriproduk`) VALUES
 (1, 'Gelas'),
-(2, 'Mangkok');
+(2, 'Mangkok'),
+(3, 'tempat lain'),
+(4, 'dedaunan');
 
 -- --------------------------------------------------------
 
@@ -76,7 +78,7 @@ CREATE TABLE `produk` (
   `namaproduk` varchar(30) NOT NULL,
   `hargaproduk` int(12) NOT NULL,
   `stokproduk` int(3) NOT NULL,
-  `deskripsi` varchar(30) NOT NULL,
+  `deskripsi` text NOT NULL,
   `tanggal` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `kategoriproduk` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -86,9 +88,15 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`idproduk`, `namaproduk`, `hargaproduk`, `stokproduk`, `deskripsi`, `tanggal`, `kategoriproduk`) VALUES
-(1, 'Gelas Kaca', 25000, 111, 'warna merah muda', '2018-04-02 13:13:48', 1),
-(3, 'mangkok ayam', 30000, 50, 'pelastik', '2018-04-02 14:16:06', 2),
-(4, 'mangkok ayam', 60000, 99, 'beling', '2018-04-02 14:16:06', 2);
+(7, 'cabe kampung', 122666, 9012, 'sdaasax', '2018-04-05 00:29:32', 2),
+(10, 'tempat ', 34346, 8, 'aaaax', '2018-04-05 00:44:07', 1),
+(11, 'gombel', 90000, 37, 'aaa', '2018-04-05 00:46:43', 3),
+(12, 'jangue', 9000, 9, 'petasan murah', '2018-04-07 22:33:56', 2),
+(13, 'curutss', 1000, 8, 'petaasan curut', '2018-04-07 22:33:56', 1),
+(16, '666', 8000, 8, '777', '2018-04-08 22:17:48', 1),
+(17, '666', 8000, 8, '777', '2018-04-08 22:18:49', 1),
+(19, 'jagung', 8000, 8, 'asli bogor', '2018-04-08 22:26:33', 1),
+(21, 'mouse murah', 79000, 50, 'merek logitech', '2018-04-09 00:16:48', 2);
 
 --
 -- Indexes for dumped tables
@@ -120,7 +128,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `kategoriproduk`
 --
 ALTER TABLE `kategoriproduk`
-  MODIFY `idkategoriproduk` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idkategoriproduk` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pelanggan`
 --
@@ -130,7 +138,7 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;COMMIT;
+  MODIFY `idproduk` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

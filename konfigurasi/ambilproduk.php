@@ -7,7 +7,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if($_GET["x"] == 'tampil'){
 
-$result = $conn->query("SELECT * FROM produk ");
+$result = $conn->query("SELECT a.idproduk, a.namaproduk,a.hargaproduk,a.stokproduk,a.deskripsi,a.kategoriproduk,b.idkategoriproduk,b.namakategoriproduk FROM produk a,kategoriproduk b WHERE a.kategoriproduk = b.idkategoriproduk");
 $outp = array();
 $outp = $result->fetch_all(MYSQLI_ASSOC);
 $conn->close();	
@@ -86,6 +86,29 @@ $conn->close();
 
 echo json_encode($outp);
 
+
+}else if($_GET["x"] == 'tambah_produk'){
+
+
+$nampro = $_GET["nampro"];
+$harpro = $_GET["harpro"];
+$deskripsi = $_GET["deskpro"];
+$stokpro = $_GET["stokpro"];
+$katpro = $_GET["katpro"];
+
+
+
+
+$sql = "INSERT INTO produk (namaproduk,hargaproduk,stokproduk,deskripsi,kategoriproduk) VALUES ('$nampro','$harpro','$stokpro','$deskripsi','$katpro')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "<div class='alert alert-success'>  <strong>Berhasil Menambahkan Produk. :) </div>";
+}else {
+    echo "<div class='alert alert-danger'>  <strong>Gagal Menambahkan Produk. :(</div>".$conn->error;
+   
+}
+
+$conn->close();
 
 }else{
 	
